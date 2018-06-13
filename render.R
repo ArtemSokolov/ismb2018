@@ -13,7 +13,7 @@ webshot::webshot(
   file = "output/ismb2018.png",
   vwidth = 4500,
   vheight = 3000,
-  zoom = 3
+  zoom = 5
 )
 
 # End of script
