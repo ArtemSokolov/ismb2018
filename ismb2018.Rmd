@@ -1,0 +1,49 @@
+---
+title: "ISMB2018 Poster"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+<style>
+body {
+  padding-top:10px
+}
+
+.navbar{
+  visibility: hidden
+}
+</style>
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+```
+
+<p style="font-size:200%;text-align:center;">
+Drug mechanisms of action predict neurodegeneration in Alzheimer's patients
+</p>
+
+Column {data-width=100}
+-----------------------------------------------------------------------
+
+### Abstract
+
+Alzheimer's Disease (AD) is a growing epidemic as longer life expectancy fuels its principal risk factor - aging. As understanding of AD grows in the setting of many failed clinical trials, the concept of AD as a single disease is giving way to the hypothesis that it is a syndrome with multiple disease pathways progressing towards a common end-stage clinical presentation. Here, we aim to identify FDA-approved drugs that target these pathways and thus are candidates for repurposing in AD. Given an FDA-approved drug, we asked if its mechanism of action is related to AD biology by training a predictor of disease stage. The predictor was limited to using expression of genes known to be associated with the drug, and its performance was compared to predictors constructed on randomly-selected gene sets of equal size. Thirty top-performing drugs were subsequently profiled on human neuroprogenitor cell lines that differentiate into a mixed culture of neurons, glia and oligodendroctyes to further refine their mechanisms of action in relevant cell types. Jak inhibitors Tofacitinib and Ruxolitinib were among the top performers, and additional in vitro experiments demonstrated that the two drugs can rescue inflammatory-induced neuronal death, suggesting their potential as repurposing candidates for AD.
+
+
+Column {data-width=100}
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+
+```
+
+### Chart C
+
+```{r}
+
+```
+
