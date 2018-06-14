@@ -11,17 +11,16 @@ output:
 library(flexdashboard)
 ```
 
-<div style="grid-template-columns: 20vw 1fr 20vw; display: grid;margin-right:20px">
-<p stlye="padding:20px;">
-<img width=90% height=auto src="img/mgh-logo.png">
-</p>
-<div>
-<span style="font-size: 4em;text-align: center;">Drug mechanisms of action predict neurodegeneration in Alzheimer's patients</span>
-</div>
-<p stlye="padding:20px;">
-<img width=90% height=auto src="img/hms-logo.png" style="float:right;">
-</p>
-</div>
+<p id="title">Drug mechanisms of action predict neurodegeneration in Alzheimer's patients</p>
+<table style="width:100%"><tr>
+<td style="width:15%;"><img src="img/mgh-logo.png" id="logo-left" /></td>
+<td><p style="text-align:center;font-size:5em">
+Steven Rodriguez<sup>1,2</sup>, Petar Todorov<sup>2</sup>, Nienke Moret<sup>2</sup>, Bradley Hyman<sup>1</sup>, Peter Sorger<sup>2</sup>, Mark Albers<sup>1,2</sup>, Artem Sokolov<sup>2</sup>  
+<sup>1</sup>Mass. General Institute for Neurodegenerative Disease  
+<sup>2</sup>Laboratory of Systems Pharmacology, Harvard Medical School
+</p></td>
+<td style="width:15%"><img src="img/hms-logo.png" id="logo-right" /></td>
+</tr></table>
 
 
 Column {data-width=33%}
@@ -29,7 +28,13 @@ Column {data-width=33%}
 
 ### Abstract
 
-Alzheimer's Disease (AD) is a growing epidemic as longer life expectancy fuels its principal risk factor - aging. As understanding of AD grows in the setting of many failed clinical trials, the concept of AD as a single disease is giving way to the hypothesis that it is a syndrome with multiple disease pathways progressing towards a common end-stage clinical presentation. Here, we aim to identify FDA-approved drugs that target these pathways and thus are candidates for repurposing in AD. Given an FDA-approved drug, we asked if its mechanism of action is related to AD biology by training a predictor of disease stage. The predictor was limited to using expression of genes known to be associated with the drug, and its performance was compared to predictors constructed on randomly-selected gene sets of equal size. Thirty top-performing drugs were subsequently profiled on human neuroprogenitor cell lines that differentiate into a mixed culture of neurons, glia and oligodendroctyes to further refine their mechanisms of action in relevant cell types. Jak inhibitors Tofacitinib and Ruxolitinib were among the top performers, and additional in vitro experiments demonstrated that the two drugs can rescue inflammatory-induced neuronal death, suggesting their potential as repurposing candidates for AD.
+Alzheimer's Disease (AD) is a growing epidemic as longer life expectancy fuels its principal risk factor - aging. As understanding of AD grows in the setting of many failed clinical trials, the concept of AD as a single disease is giving way to the hypothesis that it is a syndrome with multiple disease pathways progressing towards a common end-stage clinical presentation. Here, we aim to identify FDA-approved drugs that target these pathways and thus are candidates for repurposing in AD.
+
+Given an FDA-approved drug, we asked if its mechanism of action is related to AD biology by training a predictor of disease stage. The predictor was limited to using expression of genes known to be associated with the drug, and its performance was compared to predictors constructed on randomly-selected gene sets of equal size. Thirty top-performing drugs were subsequently profiled on human neuroprogenitor cell lines that differentiate into a mixed culture of neurons, glia and oligodendroctyes to further refine their mechanisms of action in relevant cell types. Jak inhibitors Tofacitinib and Ruxolitinib were among the top performers, and additional in vitro experiments demonstrated that the two drugs can rescue inflammatory-induced neuronal death, suggesting their potential as repurposing candidates for AD.
+
+### Overview
+
+Overview of the data here
 
 
 Column {data-width=34%}

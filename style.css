@@ -1,7 +1,7 @@
 body {
     padding-top: 10px;
     padding-left: 20px;
-    background-color: #f8f8f8;
+    background-color: #f8f8fa;
 }
 
 p {
@@ -11,8 +11,8 @@ p {
 
 p#title {
     font-size: 8em;
+    font-weight: bold;
     text-align: center;
-    width: 60%;
 }
 
 .chart-title {
@@ -37,11 +37,15 @@ p#title {
     visibility: hidden
 }
 
-img {
-    float: left;
-}
-#text {
-    width: 300px;
-    float: left;
+img#logo-left {
+    height: 200px;
+    vertical-align:middle;
+    padding-left:20px;
 }
 
+img#logo-right {
+    height: 200px;
+    vertical-align:middle;
+    padding-right:40px;
+    float:right;
+}

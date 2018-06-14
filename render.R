@@ -11,9 +11,9 @@ rmarkdown::render(
 webshot::webshot(
   url = fnHTML,
   file = "output/ismb2018.png",
-  vwidth = 4500,
-  vheight = 3375,
-  zoom = 5
+  zoom = 1,
+  vwidth = 5760,
+  vheight = 3600
 )
 
 # End of script
