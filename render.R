@@ -12,7 +12,7 @@ webshot::webshot(
   url = fnHTML,
   file = "output/ismb2018.png",
   vwidth = 4500,
-  vheight = 3000,
+  vheight = 3375,
   zoom = 5
 )
 
