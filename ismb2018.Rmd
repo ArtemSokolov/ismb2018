@@ -1,6 +1,6 @@
 ---
 title: "ISMB2018 Poster"
-output: 
+output:
   flexdashboard::flex_dashboard:
     css: style.css
     orientation: columns
@@ -11,25 +11,17 @@ output:
 library(flexdashboard)
 ```
 
-<div class="header">
-
-<img src="http://www.w3schools.com/browsers/pic_chart.jpg" style="vertical-align: middle">
-
-<a href="http://www.w3schools.com" style="font-family:Georgia;color:black;font-size:17px;"><div id="text">The site provides a reference manual covering many aspects of web programming, including technologies such as HTML, XHTML, CSS, XML, JavaScript, PHP, ASP, SQL etc. W3schools presents thousands of code examples. By using the online editor provided, readers can edit the examples and execute the code experimentally.</div></a>
-
-<img src="http://www.w3schools.com/browsers/pic_chart.jpg" style="vertical-align: middle">
-
-</div>
-
-<!--
-
+<div style="grid-template-columns: 20vw 1fr 20vw; display: grid;margin-right:20px">
+<p stlye="padding:20px;">
+<img width=90% height=auto src="img/mgh-logo.png">
+</p>
 <div>
-<img src="img/mgh-logo.png" class="logo" />
-<div style="float:left;padding:40px;">Drug mechanisms of action predict neurodegeneration in Alzheimer's patients</div>
-<img src="img/hms-logo.png" class="logo" />
+<span style="font-size: 4em;text-align: center;">Drug mechanisms of action predict neurodegeneration in Alzheimer's patients</span>
 </div>
-
--->
+<p stlye="padding:20px;">
+<img width=90% height=auto src="img/hms-logo.png" style="float:right;">
+</p>
+</div>
 
 
 Column {data-width=33%}
