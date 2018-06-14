@@ -1,0 +1,47 @@
+body {
+    padding-top: 10px;
+    padding-left: 20px;
+    background-color: #f8f8f8;
+}
+
+p {
+    font-size: 3em;
+    text-align: justify;
+}
+
+p#title {
+    font-size: 8em;
+    text-align: center;
+    width: 60%;
+}
+
+.chart-title {
+    font-size: 4em;
+    font-weight: bold;
+    color: #0092c3;
+    border-bottom-width: 3px;
+    border-bottom-right-radius: 50%;
+    margin-right: 20%;
+    border-bottom-color: #0092c3;
+}
+
+.chart-wrapper {
+    padding: 20px;
+    border-style: groove;
+    border-width: 5px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.navbar {
+    visibility: hidden
+}
+
+img {
+    float: left;
+}
+#text {
+    width: 300px;
+    float: left;
+}
+
