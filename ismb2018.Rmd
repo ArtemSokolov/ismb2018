@@ -8,7 +8,10 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-library(flexdashboard)
+library( flexdashboard )
+library( tidyverse )
+library( kableExtra )
+library( formattable )
 ```
 
 <p id="title">Drug mechanisms of action predict neurodegeneration in Alzheimer's patients</p>
@@ -32,21 +35,45 @@ Alzheimer's Disease (AD) is a growing epidemic as longer life expectancy fuels i
 
 Given an FDA-approved drug, we asked if its mechanism of action is related to AD biology by training a predictor of disease stage. The predictor was limited to using expression of genes known to be associated with the drug, and its performance was compared to predictors constructed on randomly-selected gene sets of equal size. Thirty top-performing drugs were subsequently profiled on human neuroprogenitor cell lines that differentiate into a mixed culture of neurons, glia and oligodendroctyes to further refine their mechanisms of action in relevant cell types. Jak inhibitors Tofacitinib and Ruxolitinib were among the top performers, and additional in vitro experiments demonstrated that the two drugs can rescue inflammatory-induced neuronal death, suggesting their potential as repurposing candidates for AD.
 
-### Overview
+### Introduction
 
-Overview of the data here
+#### Data Overview
+
+```{r}
+## Function creates and returns a table containing ROSMAP statistics
+ROSMAP_stats <- function()
+{
+    pfx <- '![](img/Tau'
+    sfx <- '.png){width=100%}'
+    tauPal <- c("A","B","C") %>% setNames( str_c(pfx, ., sfx), . )
+    data_frame( Braak = 0:6, `#Samples` = as.integer(c(7,51,54,176,210,133,7)),
+               Category = c("A","A","A","B","B","C","C") )
+}
+```
+
+```{r}
+## Visulize ROSMAP statistics, produced by ROSMAP_stats()
+ROSMAP_stats() %>% mutate( Pathology = tauPal[Category] ) %>%
+    mutate( Category = text_spec(Category,"html",font_size="2em"),
+           `#Samples` = color_bar("#FFA99A")(`#Samples`) ) %>%
+    kable("html", escape=FALSE, align=c("c","r","c","c")) %>%
+    kable_styling( full_width=FALSE, font_size=36 ) %>%
+    column_spec(1:4, width="6em") %>%
+##    column_spec(1:2, bold=TRUE) %>%
+    collapse_rows(columns=3:4, valign="middle")
+```
 
 
 Column {data-width=34%}
 -----------------------------------------------------------------------
 
-### Chart B
+### Computational setup
 
 ```{r}
 
 ```
 
-### Chart C
+### Digital Gene Expression
 
 ```{r}
 
