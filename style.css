@@ -51,5 +51,25 @@ img#logo-right {
 }
 
 h4 {
+    font-size: 3em;
+    font-weight: bold;
     color: #a74824;
+}
+
+.section.level4 {
+    padding-top: 20px;
+}
+
+table#rosmap {
+    margin-left: 20px;
+    float: right;
+}
+
+div#refs {
+    font-size: 0.8em;
+}
+
+span#table1cap {
+    font-size: 2em;
+    color: #666666;
 }
