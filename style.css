@@ -1,36 +1,37 @@
 body {
     padding-top: 10px;
-    padding-left: 20px;
+    padding-left: 10px;
     background-color: #f8f8fa;
 }
 
 p {
-    font-size: 3em;
+/*    font-size: 1em;*/
     text-align: justify;
 }
 
 p#title {
-    font-size: 8em;
+    font-size: 250%;
     font-weight: bold;
     text-align: center;
 }
 
 .chart-title {
-    font-size: 4em;
+    font-size: 125%;
     font-weight: bold;
     color: #0092c3;
     border-bottom-width: 3px;
     border-bottom-right-radius: 50%;
     margin-right: 20%;
     border-bottom-color: #0092c3;
+    padding-top: 0px;
 }
 
 .chart-wrapper {
-    padding: 20px;
+    padding: 5px;
     border-style: groove;
     border-width: 5px;
-    margin-right: 20px;
-    margin-bottom: 20px;
+    margin-right: 10px;
+    margin-bottom: 10px;
 }
 
 .navbar {
@@ -38,38 +39,33 @@ p#title {
 }
 
 img#logo-left {
-    height: 200px;
+    width: 100%;
     vertical-align:middle;
     padding-left:20px;
 }
 
 img#logo-right {
-    height: 200px;
+    width: 100%;
     vertical-align:middle;
     padding-right:40px;
     float:right;
 }
 
 h4 {
-    font-size: 3em;
+    font-size: 120%;
     font-weight: bold;
     color: #a74824;
 }
 
-.section.level4 {
-    padding-top: 20px;
-}
-
 table#rosmap {
-    margin-left: 20px;
+    margin-left: 10px;
     float: right;
 }
 
 div#refs {
-    font-size: 0.8em;
+    font-size: 80%;
 }
 
 span#table1cap {
-    font-size: 2em;
     color: #666666;
 }
