@@ -1,3 +1,7 @@
+html {
+    -webkit-print-color-adjust: exact;
+}
+
 body {
     padding-top: 10px;
     padding-left: 10px;
@@ -67,5 +71,6 @@ div#refs {
 }
 
 span#table1cap {
+    font-size: 80%;
     color: #666666;
 }
