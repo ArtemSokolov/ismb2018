@@ -17,6 +17,10 @@ library( tidyverse )
 library( kableExtra )
 library( formattable )
 library( ggrepel )
+library( ggridges )
+library( ggforce )
+library( gtable )
+library( grid )
 ```
 
 <p id="title">Drug mechanisms of action predict neurodegeneration in Alzheimer's patients</p>
@@ -127,19 +131,34 @@ We trained predictors of disease stage category (A, B or C) using RNAseq express
 
 #### Background performance on randomly-selected gene sets
 
+```{r fig.width=4.5, fig.height=2.5, out.width='50%', out.extra='style="float:left;margin-right:5px"'}
+BK <- read_csv( "data/bk-perf.csv.gz" )
+ggplot( BK, aes(x=Size, y=AUC, color=Task) ) + theme_bw() +
+    geom_smooth( lwd=1.5, span=2 ) + xlab( "Random Set Size" ) +
+    ylim( c(0.5, 0.75) ) +
+    scale_color_manual( values=c("tomato","steelblue","darkolivegreen","#6B2D5C")) +
+    guides( color=guide_legend(override.aes=list(fill="white")) ) +
+    theme( axis.text = etxt(12), axis.title = etxt(14), strip.text = etxt(14),
+          legend.text = etxt(12), legend.title = element_blank(),
+          legend.direction = "horizontal", legend.position = c(0.5,0.9),
+          legend.background = element_rect(fill="transparent") )
+```
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
 
 #### Gene set as a unit of biological knowledge
 
-```{r fig.width=5, fig.height=2.5, out.width='50%', out.extra='style="float:right;margin-right:5px"'}
+```{r fig.width=5, fig.height=2.5, out.width='50%', out.extra='style="float:right"'}
 GSBK_lbl <- data_frame( AUC = c(0.69, 0.55, 0.67), y = c(0.3, 2, 5),
                    lbl=c("p-value", "Random", "Gene Set\nOf Interest") )
 read_csv( "data/gs-bk.csv" ) %>%
     ggplot( aes(x=AUC) ) + theme_bw() + xlim( c(0.4,0.75) ) + 
     geom_density( fill="steelblue", alpha=0.3, lwd=1.5 ) + xlab("Performance") +
-    geom_vline( xintercept = 0.67, color="red", lwd=1.5 ) +
+    geom_vline( xintercept = 0.67, color="tomato", lwd=1.5 ) +
     geom_text_repel( data=GSBK_lbl, aes(y=y, label=lbl), size=5, fontface="bold",
                     nudge_y = c(1.5,2.5,5), nudge_x = c(1, -0.1, 1),
-                    color=c("black","black","red") ) +
+                    color=c("black","black","tomato") ) +
     theme( axis.title.x = etxt(14), axis.title.y = element_blank(),
           axis.text = element_blank(), axis.ticks = element_blank(),
           panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
@@ -148,20 +167,80 @@ read_csv( "data/gs-bk.csv" ) %>%
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-### Digital Gene Expression
+#### Top candidates
+
+```{r fig.width=7, fig.height=5, out.width='90%', fig.align="center"}
+X.cand <- read_csv( "data/cand-x.csv.gz", col_types = cols() ) %>% arrange(AUC) %>%
+    mutate( Name = factor(Name,Name), hzj = as.integer(Name=="SB202190") ) %>%
+    mutate( Lbl = ifelse(Name=="SB202190", str_c(Lbl, " "), str_c(" ", Lbl)) )
+BK.cand <- read_csv( "data/cand-bk.csv.gz", col_types = cols() ) %>%
+    mutate( Drug = factor(Drug, levels(X.cand$Name)) )
+ggplot(BK.cand, aes(x=AUC, y=Drug, fill=Task)) + 
+    theme_ridges(center_axis_labels=TRUE) +
+    geom_density_ridges2(scale=1.2, size=1, alpha=0.5) +
+    geom_segment( aes(x=AUC, xend=AUC, y=as.numeric(Name), yend=as.numeric(Name)+0.9 ),
+                 data=X.cand, color="red", lwd=2 ) +
+    geom_text( data=X.cand, aes(x=AUC, y=as.numeric(Name) + 0.5, label=Lbl, hjust=hzj),
+              fontface="bold", size=4 ) +
+    scale_fill_manual( values=c("tomato","darkolivegreen","#6b2d5c")) +
+    scale_y_discrete(expand=c(0,0.95)) +
+    theme( axis.text = etxt(12), axis.title = etxt(14),
+          legend.position=c(0.96,0.22), legend.justification =c(1,0.5),
+          legend.title=element_text(face="bold"), legend.text=element_text(face="bold"),
+          legend.box.background = element_rect(color="gray40") )
+```
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 Column {data-width=33%}
 -----------------------------------------------------------------------
 
-### Chart D
+### Digital Gene Expression
 
-Testing
+#### DGE allows for concurrent profiling of a 384-well plate
 
-### Chart E
+<img src="img/DGE.svg" />
+
+#### Gene sets derived from differential expression yield improved performance
 
 ```{r}
+dgeres <- function()
+{
+  
+  RR <- read_csv( "data/dge-res.csv.gz", col_types=cols()) %>% mutate(zoom=FALSE)
+  LL <- RR %>% filter(Task == "AC") %>% mutate(zoom=TRUE)
+  
+  ggplot( RR, aes( x = Nienke, y = DGE, col=Task ) ) + theme_bw() +
+    geom_point( size = 2 ) + geom_abline( slope = 1, lty="dashed", lwd=1.2, color="#999999" ) +
+    geom_point( data=LL, aes(size=Size), alpha=0.7 ) +
+    xlab( "AUC based on mined sets" ) + ylab( "AUC based on DGE sets" ) +
+    scale_size_continuous( range = c(1,5), breaks = c(10, 25, 50, 100, 200 ), name="Gene Set Size" ) +
+    theme( aspect.ratio = 1, strip.text=etxt(12),
+           legend.title = etxt(14), legend.text = etxt(12),
+           axis.title = etxt(14), axis.text = etxt(12),
+           legend.background = element_rect(fill="transparent") ) +
+    facet_zoom(y = Task == "AC", zoom.data=zoom) +
+    geom_text_repel( data=LL, aes(label=Drug), color = "Black", fontface="bold", size=4 )
+}
 
+main.dgeres <- function()
+{
+  gg1 <- dgeres() + guides(size=FALSE) + theme( legend.position = c(0.95, 0.15) )
+  gg2 <- dgeres() + guides(color=FALSE)  + theme( legend.position = c(0.075, 0.8) )
+  
+  lg <- gtable_filter( ggplotGrob(gg2), "guide-box" )$grobs[[1]]
+  gg <- ggplotGrob(gg1) %>% gtable_add_grob(lg, 7, 5, 7, 9)
+  
+  grid.newpage()
+  grid.draw(gg)
+}
+
+main.dgeres()
 ```
+
+### Rescue of Neurodegeneration
+
+Steve's data on cell viability here
 
 ### Acknowledgments
 
