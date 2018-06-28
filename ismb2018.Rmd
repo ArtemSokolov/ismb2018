@@ -71,13 +71,13 @@ ROSMAP_stats() %>% mutate( Category = text_spec(Category,"html",font_size="200%"
 ```
 On the molecular level, AD is characterized by two main types of lesions: beta-amyloid plaques and neurofibrillary tangles[@jouanne2017tau]. The tangles arise from abnormal phosphorylation of tau, proteins that stabilize microtubules in neurons of the central nervous system. Propagation of tangles through the brain is used by pathologists to diagnose disease stage, known as the Braak score, in individual patients. 
 
-To identify associations between drug mechanisms of action and neurodegeneration, we used The Religious Orders Study and Memory and Aging Project (ROSMAP) dataset[@ros2012overview;@map2012overview], which is available through the AMP-AD knowledge portal at [https://www.synapse.org/ampad](https://www.synapse.org/ampad). Samples in the dataset were grouped by their Braak score, as shown in the table, to establish a three-class prediction task that distinguishes between early (A), intermediate (B), and late (C) stages of AD.
+To identify associations between drug mechanisms of action and neurodegeneration, we used The Religious Orders Study and Memory and Aging Project (ROSMAP) dataset[@ros2012overview;@map2012overview], which is available through the [AMP-AD knowledge portal](https://www.synapse.org/ampad). Samples in the dataset were grouped by their Braak score, as shown in the table, to establish a three-class prediction task that distinguishes between early (A), intermediate (B), and late (C) stages of AD.
 
 #### Prediction of disease stage from RNAseq data
 
 We trained predictors of disease stage category (A, B or C) using RNAseq expression data collected on the same set of samples. Rather than using full transcriptional profiles, we reduced the gene space to sets known to be associated with specific FDA-approved drugs of interest. By comparing predictors trained on drug-related gene sets against those trained on randomly-selected sets, we generated hypotheses about drugs' relevance to neurodegeneration.
 
-Column {data-width=34%}
+Column {data-width=35%}
 -----------------------------------------------------------------------
 
 ### Computational setup
@@ -92,29 +92,31 @@ We investigated how well randomly-selected gene sets are able to predict disease
 
 #### Gene set as a unit of biological knowledge
 
-```{r fig.width=4.5, fig.height=2.5, out.width='50%', out.extra='style="float:right"'}
+```{r fig.width=4.5, fig.height=2.5, out.width='40%', out.extra='style="float:right"'}
 figGSBK()
 ```
 
-Given a gene set of interest, we ask how well a predictor trained on the expression of those genes is able to predict disease stage compared to predictors trained on randomly-selected sets of the same size. If the gene set of interest leads to significantly higher performance than random sets, then it might be evidence of association between those genes and disease.
+Given a gene set of interest, we ask how well a predictor trained on the expression of those genes is able to predict disease stage compared to predictors trained on randomly-selected sets of the same size. If the gene set of interest leads to significantly higher performance than random sets, then it suggests association between those genes and disease.
 
 #### Top candidates
 
-```{r fig.width=7, fig.height=5, out.width='90%', fig.align="center"}
+```{r fig.width=7, fig.height=5, out.width='80%', fig.align="center"}
 figTopCand()
 ```
 
-We composed a map of drug-gene associations by mining publicly-available resources KINOMEscan ([http://lincs.hms.harvard.edu/kinomescan/](http://lincs.hms.harvard.edu/kinomescan/)), DrugBank[@wishart2017drugbank] and ChEMBL[@gaulton2016chembl]. The resulting gene sets were compared against randomly-selected sets of equal size, and the results for the top 10 candidates are presented in the figure.
+We composed a map of drug-gene associations by mining publicly-available resources [KINOMEscan](http://lincs.hms.harvard.edu/kinomescan/), DrugBank[@wishart2017drugbank] and ChEMBL[@gaulton2016chembl]. The resulting gene sets were compared against randomly-selected sets of equal size, and the results for the top 10 candidates are presented in the figure.
 
 ### Digital Gene Expression
 
 #### High throughput profiling
 
-<img src="img/DGE.svg" style="width:95%;display:block;margin-left:auto;margin-right:auto;" />
+<img src="img/DGE.svg" style="width:85%;display:block;margin-left:auto;margin-right:auto;" />
 
-To refine drugs' mechanisms of action in relevant cell types, we profiled top 30 candidates on human neuroprogenitor cell lines that differentiate into a mixed culture of neurons, glia and oligodendroctyes. Cells treated with each drug and the corresponding controls were sequenced using the Digital Gene Expression (DGE) platform[@xiong2017comparison].
+<p style="top-margin:-3px">
+To refine drugs' mechanisms of action in relevant cell types, we profiled top 30 candidates on human neuroprogenitor cell lines that differentiate into a mixed culture of neurons, glia and oligodendroctyes. Cells treated with each drug and the corresponding controls were sequenced using the Digital Gene Expression (DGE) platform[@xiong2017comparison;@soumillon2014characterization].
+</p>
 
-Column {data-width=33%}
+Column {data-width=35%}
 -----------------------------------------------------------------------
 
 ### Experimental results
@@ -129,7 +131,11 @@ Differential expression signatures were derived by comparing transcriptional pro
 
 #### Rescue of neurodegeneration
 
-Steve's data on cell viability here
+```{r fig.width=4, fig.height=3, out.width='50%', out.extra='style="float:left;margin-right:5px;"'}
+figViability() + coord_flip()
+```
+
+Several Janus Kinase (Jak) inhibitors appeared among the top performers. We measured their ability to rescue neurodegeneration by stressing differentiated neural progenitors with poly(I:C) to induce inflammatory response and cell death. Jak inhibitors Tofacitinib and Ruxolitinib were then introduced at 10 $\mu$M concentration, leading to increased cell viability.
 
 ### Acknowledgments
 

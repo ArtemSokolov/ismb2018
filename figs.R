@@ -96,8 +96,8 @@ figTopCand <- function()
         geom_text( data=X.cand, aes(x=AUC, y=as.numeric(Name) + 0.5, label=Lbl, hjust=hzj),
                   fontface="bold", size=4 ) +
         scale_fill_manual( values=c("tomato","darkolivegreen","#6b2d5c")) +
-        scale_y_discrete(expand=c(0,0.95)) +
-        theme( axis.text = etxt(12), axis.title = etxt(14),
+##        scale_y_discrete(expand=c(0,0.95)) +
+        theme( axis.text = etxt(11), axis.title = etxt(13),
               legend.position=c(0.96,0.22), legend.justification =c(1,0.5),
               legend.title=element_text(face="bold"), legend.text=element_text(face="bold"),
               legend.box.background = element_rect(color="gray40") )
@@ -140,3 +140,12 @@ figDGEres <- function()
     grid.draw(gg)
 }
 
+## Figure that shows results of viability experiments
+figViability <- function()
+{
+    V <- read_csv( "data/viability.csv" ) %>% gather( Condition, Viability ) %>%
+        filter( Viability < 1.3 )
+    ggplot( V, aes(x=Condition, y=Viability) ) + theme_bw() +
+        stat_summary( fun.y="mean", geom="bar", alpha=0.75, fill="steelblue" ) +
+        geom_jitter( width=0.05 ) + theme( axis.text=etxt(11), axis.title=etxt(13) )
+}

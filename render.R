@@ -1,19 +1,12 @@
-# Set parameters
-fnHTML <- "output/ismb2018.html"
-
-# Render document
 rmarkdown::render(
   input = "ismb2018.Rmd",
-  output_file = fnHTML
+  output_file = "docs/index.html"
 )
 
-# Render preview
-## webshot::webshot(
-##   url = fnHTML,
-##   file = "output/ismb2018.png",
-##   zoom = 1,
-##   vwidth = 5760,
-##   vheight = 3600
-## )
+## Remove all !important tags from the output .html
+setwd("docs")
+system('echo "%s/%21important// | w!" | vim -e index.html')
+setwd("..")
 
-# End of script
+## Render the .html to .pdf using headless Chrome
+system("node render.js")
