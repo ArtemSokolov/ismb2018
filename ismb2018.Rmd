@@ -73,14 +73,14 @@ On the molecular level, AD is characterized by two main types of lesions: beta-a
 
 To identify associations between drug mechanisms of action and neurodegeneration, we used The Religious Orders Study and Memory and Aging Project (ROSMAP) dataset[@ros2012overview;@map2012overview], which is available through the AMP-AD knowledge portal at [https://www.synapse.org/ampad](https://www.synapse.org/ampad). Samples in the dataset were grouped by their Braak score, as shown in the table, to establish a three-class prediction task that distinguishes between early (A), intermediate (B), and late (C) stages of AD.
 
+#### Prediction of disease stage from RNAseq data
+
+We trained predictors of disease stage category (A, B or C) using RNAseq expression data collected on the same set of samples. Rather than using full transcriptional profiles, we reduced the gene space to sets known to be associated with specific FDA-approved drugs of interest. By comparing predictors trained on drug-related gene sets against those trained on randomly-selected sets, we generated hypotheses about drugs' relevance to neurodegeneration.
+
 Column {data-width=34%}
 -----------------------------------------------------------------------
 
 ### Computational setup
-
-#### Prediction of disease stage from RNAseq data
-
-We trained predictors of disease stage category (A, B or C) using RNAseq expression data collected on the same set of samples. Rather than using full transcriptional profiles, we reduced the gene space to sets known to be associated with specific FDA-approved drugs of interest. By comparing predictors trained on drug-related gene sets against those trained on randomly-selected sets, we generated hypotheses about drugs' relevance to neurodegeneration.
 
 #### Background performance on randomly-selected gene sets
 
@@ -92,7 +92,7 @@ We investigated how well randomly-selected gene sets are able to predict disease
 
 #### Gene set as a unit of biological knowledge
 
-```{r fig.width=5, fig.height=2.5, out.width='50%', out.extra='style="float:right"'}
+```{r fig.width=4.5, fig.height=2.5, out.width='50%', out.extra='style="float:right"'}
 figGSBK()
 ```
 
@@ -104,25 +104,30 @@ Given a gene set of interest, we ask how well a predictor trained on the express
 figTopCand()
 ```
 
-We composed a map of drug-gene associations by mining publicly-available resources KINOMEscan [http://lincs.hms.harvard.edu/kinomescan/](http://lincs.hms.harvard.edu/kinomescan/), DrugBank [https://www.drugbank.ca/](https://www.drugbank.ca/) and ChEMBL [https://www.ebi.ac.uk/chembl/](https://www.ebi.ac.uk/chembl/). The resulting gene sets were compared against randomly-selected sets of equal size, and the results for the top 10 candidates are presented in the figure.
+We composed a map of drug-gene associations by mining publicly-available resources KINOMEscan ([http://lincs.hms.harvard.edu/kinomescan/](http://lincs.hms.harvard.edu/kinomescan/)), DrugBank[@wishart2017drugbank] and ChEMBL[@gaulton2016chembl]. The resulting gene sets were compared against randomly-selected sets of equal size, and the results for the top 10 candidates are presented in the figure.
+
+### Digital Gene Expression
+
+#### High throughput profiling
+
+<img src="img/DGE.svg" style="width:95%;display:block;margin-left:auto;margin-right:auto;" />
+
+To refine drugs' mechanisms of action in relevant cell types, we profiled top 30 candidates on human neuroprogenitor cell lines that differentiate into a mixed culture of neurons, glia and oligodendroctyes. Cells treated with each drug and the corresponding controls were sequenced using the Digital Gene Expression (DGE) platform[@xiong2017comparison].
 
 Column {data-width=33%}
 -----------------------------------------------------------------------
 
-### Digital Gene Expression
+### Experimental results
 
-#### DGE allows for concurrent profiling of a 384-well plate
+#### Improved prediction accuracy
 
-<img src="img/DGE.svg" />
-
-
-#### Gene sets derived from differential expression yield improved performance
-
-```{r}
+```{r fig.width=9, fig.height=5, out.width='95%', fig.align="center"}
 figDGEres()
 ```
 
-### Rescue of Neurodegeneration
+Differential expression signatures were derived by comparing transcriptional profiles of treated cells against controls. By looking at the top differentially-expressed genes, we observed improved prediction accuracy over mined gene sets, particularly when learning to distinguish early (A) vs. late (C) disease stages.
+
+#### Rescue of neurodegeneration
 
 Steve's data on cell viability here
 

@@ -47,7 +47,8 @@ ROSMAP_stats <- function()
 ## Figure displays performance of background gene sets on ROSMAP
 figBkPerf <- function()
 {
-    BK <- read_csv( "data/bk-perf.csv.gz" )
+    taskMap <- c( "AB"="A-vs-B ", "AC"="A-vs-C ", "BC"="B-vs-C ", "Ordinal"="Ordinal" )
+    BK <- read_csv( "data/bk-perf.csv.gz" ) %>% mutate( Task = taskMap[Task] )
     ggplot( BK, aes(x=Size, y=AUC, color=Task) ) + theme_bw() +
         geom_smooth( lwd=1.5, span=2 ) + xlab( "Random Set Size" ) +
         ylim( c(0.5, 0.75) ) +
@@ -80,11 +81,13 @@ figGSBK <- function()
 ## Figure shows top drug candidates
 figTopCand <- function()
 {
+    taskMap <- c( "AB"="A-vs-B", "AC"="A-vs-C", "BC"="B-vs-C", "Ordinal"="Ordinal" )
     X.cand <- read_csv( "data/cand-x.csv.gz", col_types = cols() ) %>% arrange(AUC) %>%
         mutate( Name = factor(Name,Name), hzj = as.integer(Name=="SB202190") ) %>%
-        mutate( Lbl = ifelse(Name=="SB202190", str_c(Lbl, " "), str_c(" ", Lbl)) )
+        mutate( Lbl = ifelse(Name=="SB202190", str_c(Lbl, " "), str_c(" ", Lbl)) ) %>%
+        mutate( Task = taskMap[Task] )
     BK.cand <- read_csv( "data/cand-bk.csv.gz", col_types = cols() ) %>%
-        mutate( Drug = factor(Drug, levels(X.cand$Name)) )
+        mutate( Drug = factor(Drug, levels(X.cand$Name)), Task = taskMap[Task] )
     ggplot(BK.cand, aes(x=AUC, y=Drug, fill=Task)) + 
         theme_ridges(center_axis_labels=TRUE) +
         geom_density_ridges2(scale=1.2, size=1, alpha=0.5) +
@@ -105,25 +108,29 @@ figDGEres <- function()
 {
     DGEres <- function()
     {
-        RR <- read_csv( "data/dge-res.csv.gz", col_types=cols()) %>% mutate(zoom=FALSE)
-        LL <- RR %>% filter(Task == "AC") %>% mutate(zoom=TRUE)
+        taskMap <- c( "AB"="A-vs-B", "AC"="A-vs-C", "BC"="B-vs-C", "Ordinal"="Ordinal" )
+        RR <- read_csv( "data/dge-res.csv.gz", col_types=cols()) %>%
+            mutate( Task = taskMap[Task], zoom=FALSE )
+        LL <- RR %>% filter(Task == "A-vs-C") %>% mutate(zoom=TRUE)
   
         ggplot( RR, aes( x = Nienke, y = DGE, col=Task ) ) + theme_bw() +
             geom_point( size = 2 ) + geom_abline( slope = 1, lty="dashed", lwd=1.2, color="#999999" ) +
             geom_point( data=LL, aes(size=Size), alpha=0.7 ) +
             xlab( "AUC based on mined sets" ) + ylab( "AUC based on DGE sets" ) +
-            scale_size_continuous( range = c(1,5), breaks = c(10, 25, 50, 100, 200 ), name="Gene Set Size" ) +
+            scale_color_manual( values=c("tomato","steelblue","darkolivegreen","#6B2D5C")) +
+            scale_size_continuous( range=c(1,5), breaks=c(10, 25, 50, 100, 200),
+                                  name="Gene Set Size" ) +
             theme( aspect.ratio = 1, strip.text=etxt(12),
-                  legend.title = etxt(14), legend.text = etxt(12),
+                  legend.title = etxt(13), legend.text = etxt(11),
                   axis.title = etxt(14), axis.text = etxt(12),
-                  legend.background = element_rect(fill="transparent") ) +
-            facet_zoom(y = Task == "AC", zoom.data=zoom) +
+                  legend.background = element_rect(fill="white", color="#999999") ) +
+            facet_zoom(y = Task == "A-vs-C", zoom.data=zoom) +
             geom_text_repel( data=LL, aes(label=Drug), color = "Black", fontface="bold", size=4 )
     }
 
     ## Consider two versions, one for each of the legends
-    gg1 <- DGEres() + guides(size=FALSE) + theme( legend.position = c(0.95, 0.15) )
-    gg2 <- DGEres() + guides(color=FALSE)  + theme( legend.position = c(0.075, 0.8) )
+    gg1 <- DGEres() + guides(size=FALSE) + theme( legend.position = c(0.935, 0.16) )
+    gg2 <- DGEres() + guides(color=FALSE)  + theme( legend.position = c(0.1, 0.8) )
 
     ## Transfer both legends into a common plot
     lg <- gtable_filter( ggplotGrob(gg2), "guide-box" )$grobs[[1]]
