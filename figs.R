@@ -81,14 +81,24 @@ figGSBK <- function()
 ## Figure shows top drug candidates
 figTopCand <- function()
 {
+    ## Compose a map for renaming task definitions
     taskMap <- c( "AB"="A-vs-B", "AC"="A-vs-C", "BC"="B-vs-C", "Ordinal"="Ordinal" )
+
+    ## Generate a map for renaming Drugs to Drug (Nominal Target) format
+    dnMap <- read_csv( "data/cand-x.csv.gz", col_types = cols() ) %>%
+        transmute( Drug = Name, Name = str_c( Name, " (", Lbl, ")" ) )
+    
     X.cand <- read_csv( "data/cand-x.csv.gz", col_types = cols() ) %>% arrange(AUC) %>%
-        mutate( Name = factor(Name,Name), hzj = as.integer(Name=="SB202190") ) %>%
-        mutate( Lbl = ifelse(Name=="SB202190", str_c(Lbl, " "), str_c(" ", Lbl)) ) %>%
-        mutate( Task = taskMap[Task] )
+        mutate( hzj = as.integer(Name=="SB202190"), Task = taskMap[Task] ) %>%
+        mutate( Lbl = ifelse(Name=="SB202190",
+                             str_c(Size, " ", "genes "),
+                             str_c(" ", Size, " genes")) ) %>%
+        rename( Drug = Name ) %>% inner_join( dnMap ) %>%
+        mutate( Name = factor(Name,Name) )
     BK.cand <- read_csv( "data/cand-bk.csv.gz", col_types = cols() ) %>%
-        mutate( Drug = factor(Drug, levels(X.cand$Name)), Task = taskMap[Task] )
-    ggplot(BK.cand, aes(x=AUC, y=Drug, fill=Task)) + 
+        inner_join( dnMap ) %>%
+        mutate( Name = factor(Name, levels(X.cand$Name)), Task = taskMap[Task] )
+    ggplot(BK.cand, aes(x=AUC, y=Name, fill=Task)) + 
         theme_ridges(center_axis_labels=TRUE) +
         geom_density_ridges2(scale=1.2, size=1, alpha=0.5) +
         geom_segment( aes(x=AUC, xend=AUC, y=as.numeric(Name), yend=as.numeric(Name)+0.9 ),
