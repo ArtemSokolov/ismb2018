@@ -1,6 +1,6 @@
 # ismb2018: Poster I presented at [ISMB2018](https://www.iscb.org/ismb2018)
 
-To generate the .html and .pdf renders, run `Rscript render.R` in the main directory. The final .html render can be viewed at https://artemsokolov.github.io/ismb2018/. The final .pdf is available as `ismb2018.pdf`.
+To generate the .html and .pdf renders, run `Rscript render.R` in the main directory. The final .html render can be viewed at https://artemsokolov.github.io/ismb2018/. The final .pdf is available as [ismb2018.pdf](https://github.com/ArtemSokolov/ismb2018/blob/master/ismb2018.pdf).
 
 ## Dependencies
 
