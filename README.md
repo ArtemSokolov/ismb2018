@@ -5,7 +5,7 @@ To generate the .html and .pdf renders, run `Rscript render.R` in the main direc
 ## Dependencies
 
 ### .html render
-The .html render is performed [R Markdown](https://rmarkdown.rstudio.com) and requires the following R packages: `flexdashboard`, `tidyverse`, `kableExtra`, `formattable`, `ggrepel`, `ggridges`, `ggforce`, `gtable`, and of course `rmarkdown`. Most of these can be installed directly from [CRAN](https://cran.r-project.org/) via `install.packages()`. However, certain features might require more recent package versions available on GitHub. An example of this is the zoom panel in the mined-vs-DGE plot; to get it to render properly, you will likely need to install `ggforce` from https://github.com/thomasp85/ggforce.
+The .html render is performed by [R Markdown](https://rmarkdown.rstudio.com) and requires the following R packages: `flexdashboard`, `tidyverse`, `kableExtra`, `formattable`, `ggrepel`, `ggridges`, `ggforce`, `gtable`, and of course `rmarkdown`. Most of these can be installed directly from [CRAN](https://cran.r-project.org/) via `install.packages()`. However, certain features might require more recent package versions available on GitHub. An example of this is the zoom panel in the mined-vs-DGE plot; to get it to render properly, you will likely need to install `ggforce` from https://github.com/thomasp85/ggforce.
 
 ### .pdf render
 Rendering to .pdf is done by [Puppeteer](https://developers.google.com/web/tools/puppeteer/), a node library for headless Chrome. Most of the guides for Rmarkdown-based posters I looked at use PhantomJS, but I've had many problems with PhantomJS output not matching what I was viewing in my Chrome browser while building the poster. To avoid headaches, I switched to Puppeteer.
